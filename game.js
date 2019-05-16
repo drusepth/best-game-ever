@@ -5,6 +5,9 @@ function yell() {
   alert("the british are coming");
 }
 
+upcode = 38;
+downcode = 40;
+
 var key_pressed = {};
 window.onkeyup = function(e) { key_pressed[e.keyCode] = false; }
 window.onkeydown = function(e) { key_pressed[e.keyCode] = true; }
@@ -23,6 +26,7 @@ class Paddle {
   }
 
   move(percentage_move) {
+    console.log("we're moving");
     this.position = this.position - percentage_move;
   }
 
@@ -38,8 +42,49 @@ class Paddle {
   }
 }
 
+//Class of ball bouncing around
+class Ball {
+
+  constructor(ball_id, top, left, radius, left_speed, top_speed) {
+    this.ball_id = ball_id;
+    this.top = top;
+    this.left = left;
+    this.radius = radius;
+    this.direction = direction;
+    this.speed = speed;
+    this.height = radius*2;
+    this.width = radius*2;
+  }
+
+  move() {
+    this.left = this.left - this.left_speed;
+    this.top = this.top - this.top_speed;
+  }
+
+  render() {
+    var ball = document.querySelector(".ball[data-ball='" + this.ball_id + "']");
+    ball.style.background = "blue";
+    ball.style.top = this.top;
+    ball.style.left = this.left;
+    ball.style.border_radius = this.radius;
+  }
+}
+
+
+//function to handle pressing of up/down keys
+function handle_key_press() {
+  if(key_pressed[upcode]) {
+    player_one_paddle.move(2);
+  }
+
+  if(key_pressed[downcode]) {
+    player_one_paddle.move(-2);
+  }
+}
+
 var player_one_paddle = new Paddle(1, 80, 5, 50);
 var player_two_paddle = new Paddle(2, 80, 5, 50);
 
-setInterval(function() {player_one_paddle.render()}, 1000);
-setInterval(function() {player_two_paddle.render()}, 1000);
+setInterval(function() {player_one_paddle.render()}, 100);
+setInterval(function() {player_two_paddle.render()}, 100);
+setInterval(function() {handle_key_press()}, 100);

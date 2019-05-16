@@ -18,13 +18,13 @@ body {
 .paddle[data-player="1"] {
     position: absolute;
     left: 10px;
-    top: 45%;
+    top: 1%;
 }
 
 .paddle[data-player="2"] {
     position: absolute;
     right: 10px;
-    top: 45%;
+    top: 1%;
 }
 
 .ball {

@@ -50,8 +50,8 @@ class Ball {
     this.top = top;
     this.left = left;
     this.radius = radius;
-    this.direction = direction;
-    this.speed = speed;
+    this.left_speed = left_speed;
+    this.top_speed = top_speed;
     this.height = radius*2;
     this.width = radius*2;
   }
@@ -62,10 +62,11 @@ class Ball {
   }
 
   render() {
+    this.move();
     var ball = document.querySelector(".ball[data-ball='" + this.ball_id + "']");
     ball.style.background = "blue";
-    ball.style.top = this.top;
-    ball.style.left = this.left;
+    ball.style.top = this.top + "%";
+    ball.style.left = this.left + "%";
     ball.style.border_radius = this.radius;
   }
 }
@@ -84,7 +85,9 @@ function handle_key_press() {
 
 var player_one_paddle = new Paddle(1, 80, 5, 50);
 var player_two_paddle = new Paddle(2, 80, 5, 50);
+var ball_one = new Ball(1, 50, 50, 10, 1, 1);
 
 setInterval(function() {player_one_paddle.render()}, 100);
 setInterval(function() {player_two_paddle.render()}, 100);
 setInterval(function() {handle_key_press()}, 100);
+setInterval(function() {ball_one.render()}, 100);

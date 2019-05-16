@@ -62,8 +62,19 @@ class Ball {
   }
 
   render() {
-    this.move();
     var ball = document.querySelector(".ball[data-ball='" + this.ball_id + "']");
+    var elements_at_this_position = document.elementsFromPoint(
+      ball.getBoundingClientRect().x,
+      ball.getBoundingClientRect().y
+    ).filter(function (e) { return e.classList.contains("paddle") });
+    console.log(elements_at_this_position);
+    
+    if (elements_at_this_position.length > 1) {
+      console.log('collision!');
+    }
+
+    this.move();
+
     ball.style.background = "blue";
     ball.style.top = this.top + "%";
     ball.style.left = this.left + "%";
@@ -85,9 +96,9 @@ function handle_key_press() {
 
 var player_one_paddle = new Paddle(1, 80, 5, 50);
 var player_two_paddle = new Paddle(2, 80, 5, 50);
-var ball_one = new Ball(1, 50, 50, 10, 1, 1);
+var ball_one = new Ball(1, 50, 50, 10, 0.3, 0.3);
 
 setInterval(function() {player_one_paddle.render()}, 100);
 setInterval(function() {player_two_paddle.render()}, 100);
 setInterval(function() {handle_key_press()}, 100);
-setInterval(function() {ball_one.render()}, 100);
+setInterval(function() {ball_one.render()}, 30);

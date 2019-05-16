@@ -1,20 +1,22 @@
 <html>
     <head>
         <link rel="stylesheet" href="game.css" />
+        <link rel="stylesheet" href="lib/animate.css" />
     </head>
     <body>
         <marquee>This is our game.</marquee>
 
-        <div class="paddle" data-player="1"></div>
-        <div class="paddle" data-player="2"></div>
+        <div class="paddle animated bounceInLeft" data-player="1"></div>
+        <div class="paddle animated bounceInRight" data-player="2"></div>
 
-        <div class="ball" data-ball="1"></div>
+        <div class="ball animated flip" data-ball="1"></div>
 
-        <div class="scoreboard">
+        <div class="scoreboard animated bounceInUp">
             <span class="score" data-player="1">0</span>
             -
             <span class="score" data-player="2">0</span>
         </div>
+
         <script src="game.js"></script>
     </body>
 </html>

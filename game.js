@@ -9,8 +9,8 @@ upcode = 38;
 downcode = 40;
 
 var key_pressed = {};
-window.onkeyup = function(e) { key_pressed[e.keyCode] = false; }
-window.onkeydown = function(e) { key_pressed[e.keyCode] = true; }
+window.onkeyup = function(event) { key_pressed[event.keyCode] = false; }
+window.onkeydown = function(event) { key_pressed[event.keyCode] = true; }
 
 //Class of Paddle which is rectangle on each side of the screen
 class Paddle {

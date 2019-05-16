@@ -5,8 +5,11 @@ function yell() {
   alert("the british are coming");
 }
 
-upcode = 38;
-downcode = 40;
+upcode = 87;
+downcode = 83;
+
+upcode_two = 38;
+downcode_two = 40;
 
 var key_pressed = {};
 window.onkeyup = function(event) { key_pressed[event.keyCode] = false; }
@@ -63,13 +66,23 @@ class Ball {
 
   render() {
     var ball = document.querySelector(".ball[data-ball='" + this.ball_id + "']");
-    var elements_at_this_position = document.elementsFromPoint(
+    var elements_at_left_position = document.elementsFromPoint(
       ball.getBoundingClientRect().x,
+      ball.getBoundingClientRect().y + (1/2)*ball.getBoundingClientRect().height
+    ).filter(function (e) { return e.classList.contains("paddle") });
+    //console.log(elements_at_this_position);
+
+    var elements_at_right_position = document.elementsFromPoint(
+      ball.getBoundingClientRect().x + ball.getBoundingClientRect().width,
       ball.getBoundingClientRect().y
     ).filter(function (e) { return e.classList.contains("paddle") });
-    
-    if (elements_at_this_position.length > 1) {
+    if (elements_at_left_position.length >= 1 || elements_at_right_position.length >= 1) {
       console.log('collision!');
+      this.left_speed = 0 - this.left_speed;
+    }
+
+    if (ball.getBoundingClientRect().top < 0 || ball.getBoundingClientRect().top > window.innerHeight) {
+      this.top_speed = - this.top_speed;
     }
 
     this.move();
@@ -90,6 +103,14 @@ function handle_key_press() {
 
   if(key_pressed[downcode]) {
     player_one_paddle.move(-2);
+  }
+
+  if(key_pressed[upcode_two]) {
+    player_two_paddle.move(2);
+  }
+
+  if(key_pressed[downcode_two]) {
+    player_two_paddle.move(-2);
   }
 }
 

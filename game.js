@@ -24,10 +24,18 @@ class Paddle {
 
   render() {
     //access html element of the paddle and update everything to be this object
-    var element = document.querySelectorAll(".paddle[data-player='" + this.player_id + "']")[0];
-    return element;
+    var paddle = document.querySelector(".paddle[data-player='" + this.player_id + "']");
+    paddle.style.background = "red";
+    paddle.style.top = this.position + "%";
+    paddle.style.height = this.vertical_length;
+    paddle.style.width = this.horizontal_length;
+
+    return paddle;
   }
 }
 
-var player_one_paddle = new Paddle(1, 10, 5, 50);
-var player_two_paddle = new Paddle(2, 10, 5, 50);
+var player_one_paddle = new Paddle(1, 80, 5, 50);
+var player_two_paddle = new Paddle(2, 80, 5, 50);
+
+setInterval(function() {player_one_paddle.render()}, 1000);
+setInterval(function() {player_two_paddle.render()}, 1000);

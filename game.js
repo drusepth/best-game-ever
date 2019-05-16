@@ -67,7 +67,6 @@ class Ball {
       ball.getBoundingClientRect().x,
       ball.getBoundingClientRect().y
     ).filter(function (e) { return e.classList.contains("paddle") });
-    console.log(elements_at_this_position);
     
     if (elements_at_this_position.length > 1) {
       console.log('collision!');
@@ -96,9 +95,16 @@ function handle_key_press() {
 
 var player_one_paddle = new Paddle(1, 80, 5, 50);
 var player_two_paddle = new Paddle(2, 80, 5, 50);
-var ball_one = new Ball(1, 50, 50, 10, 0.3, 0.3);
+var ball_one = new Ball(
+  1, // ball ID
+  30 + Math.random() * 50 << 0, // initial X%
+  30 + Math.random() * 50 << 0, // initial Y%
+  10,  // radius
+  0.3, // top speed
+  0.3  // left speed
+);
 
-setInterval(function() {player_one_paddle.render()}, 100);
-setInterval(function() {player_two_paddle.render()}, 100);
+setInterval(function() {player_one_paddle.render()}, 60);
+setInterval(function() {player_two_paddle.render()}, 60);
 setInterval(function() {handle_key_press()}, 100);
 setInterval(function() {ball_one.render()}, 30);

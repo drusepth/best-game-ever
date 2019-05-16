@@ -29,14 +29,13 @@ class Paddle {
   }
 
   move(percentage_move) {
-    console.log("we're moving");
     this.position = this.position - percentage_move;
   }
 
   render() {
     //access html element of the paddle and update everything to be this object
     var paddle = document.querySelector(".paddle[data-player='" + this.player_id + "']");
-    paddle.style.background = "red";
+    paddle.style.background = "white";
     paddle.style.top = this.position + "%";
     paddle.style.height = this.vertical_length;
     paddle.style.width = this.horizontal_length;
@@ -57,6 +56,7 @@ class Ball {
     this.top_speed = top_speed;
     this.height = radius*2;
     this.width = radius*2;
+    this.bounce_acceleration_multiplier = 1.25;
   }
 
   move() {
@@ -66,19 +66,20 @@ class Ball {
 
   render() {
     var ball = document.querySelector(".ball[data-ball='" + this.ball_id + "']");
+
     var elements_at_left_position = document.elementsFromPoint(
       ball.getBoundingClientRect().x,
       ball.getBoundingClientRect().y + (1/2)*ball.getBoundingClientRect().height
     ).filter(function (e) { return e.classList.contains("paddle") });
-    //console.log(elements_at_this_position);
-
     var elements_at_right_position = document.elementsFromPoint(
       ball.getBoundingClientRect().x + ball.getBoundingClientRect().width,
       ball.getBoundingClientRect().y
     ).filter(function (e) { return e.classList.contains("paddle") });
+
     if (elements_at_left_position.length >= 1 || elements_at_right_position.length >= 1) {
       console.log('collision!');
       this.left_speed = 0 - this.left_speed;
+      this.left_speed *= this.bounce_acceleration_multiplier;
     }
 
     if (ball.getBoundingClientRect().top < 0 || ball.getBoundingClientRect().top > window.innerHeight) {
@@ -118,8 +119,8 @@ var player_one_paddle = new Paddle(1, 80, 5, 50);
 var player_two_paddle = new Paddle(2, 80, 5, 50);
 var ball_one = new Ball(
   1, // ball ID
-  30 + Math.random() * 50 << 0, // initial X%
-  30 + Math.random() * 50 << 0, // initial Y%
+  30 + Math.random() * 50 << 0, // initial X% -- random value between 30% and 30+50%
+  30 + Math.random() * 50 << 0, // initial Y% -- random value between 30% and 30+50%
   10,  // radius
   0.3, // top speed
   0.3  // left speed
@@ -127,5 +128,5 @@ var ball_one = new Ball(
 
 setInterval(function() {player_one_paddle.render()}, 60);
 setInterval(function() {player_two_paddle.render()}, 60);
-setInterval(function() {handle_key_press()}, 100);
+setInterval(function() {handle_key_press()}, 40);
 setInterval(function() {ball_one.render()}, 30);

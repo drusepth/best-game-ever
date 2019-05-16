@@ -1,3 +1,42 @@
 body {
-    background: green;
+    background: black;
+    color: white;
+    font-family: "Courier New", Courier, monospace;
+
+    overflow: hidden;
+}
+
+.paddle {
+    border: 1px solid #cccccc;
+    background: white;
+
+    display: inline-block;
+    height: 80px;
+    width: 5px;
+}
+
+.paddle[data-player="1"] {
+    position: absolute;
+    left: 10px;
+    top: 45%;
+}
+
+.paddle[data-player="2"] {
+    position: absolute;
+    right: 10px;
+    top: 45%;
+}
+
+.ball {
+    background: white;
+    height: 16px;
+    width: 16px;
+    border-radius: 8px;
+}
+
+.scoreboard {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
 }

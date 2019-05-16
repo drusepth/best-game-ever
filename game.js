@@ -5,6 +5,10 @@ function yell() {
   alert("the british are coming");
 }
 
+var key_pressed = {};
+window.onkeyup = function(e) { key_pressed[e.keyCode] = false; }
+window.onkeydown = function(e) { key_pressed[e.keyCode] = true; }
+
 //Class of Paddle which is rectangle on each side of the screen
 class Paddle {
 

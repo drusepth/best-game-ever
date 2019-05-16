@@ -11,6 +11,8 @@ downcode = 83;
 upcode_two = 38;
 downcode_two = 40;
 
+var NUMBER_OF_BALLS = 1;
+
 var key_pressed = {};
 window.onkeyup = function(event) { key_pressed[event.keyCode] = false; }
 window.onkeydown = function(event) { key_pressed[event.keyCode] = true; }
@@ -57,6 +59,11 @@ class Ball {
     this.height = radius*2;
     this.width = radius*2;
     this.bounce_acceleration_multiplier = 1.25;
+
+    var node = document.createElement("div");
+    node.classList.add("ball", "animated", "flip");
+    node.setAttribute("data-ball", this.ball_id);
+    document.body.appendChild(node);
   }
 
   move() {
@@ -117,16 +124,20 @@ function handle_key_press() {
 
 var player_one_paddle = new Paddle(1, 80, 5, 50);
 var player_two_paddle = new Paddle(2, 80, 5, 50);
-var ball_one = new Ball(
-  1, // ball ID
-  30 + Math.random() * 50 << 0, // initial X% -- random value between 30% and 30+50%
-  30 + Math.random() * 50 << 0, // initial Y% -- random value between 30% and 30+50%
-  10,  // radius
-  0.3, // top speed
-  0.3  // left speed
-);
+
+var balls = [];
+for (var i = 1; i <= NUMBER_OF_BALLS; i++) {
+  balls.push(new Ball(
+    i, // ball ID
+    30 + Math.random() * 50 << 0, // initial X% -- random value between 30% and 30+50%
+    30 + Math.random() * 50 << 0, // initial Y% -- random value between 30% and 30+50%
+    10,  // radius
+    0.3, // top speed
+    0.3  // left speed
+  ));
+}
 
 setInterval(function() {player_one_paddle.render()}, 60);
 setInterval(function() {player_two_paddle.render()}, 60);
 setInterval(function() {handle_key_press()}, 40);
-setInterval(function() {ball_one.render()}, 30);
+setInterval(function() {for (var i = 0; i < balls.length; i++) { balls[i].render() }}, 30);

@@ -5,13 +5,25 @@ function yell() {
   alert("the british are coming");
 }
 
-upcode = 87;
-downcode = 83;
+//size of paddles
+const vertical_length = 120;
+const horizontal_length = 20;
 
-upcode_two = 38;
-downcode_two = 40;
+//paddle starting position in % distance from top
+const starting_position = 50;
 
-var NUMBER_OF_BALLS = 1;
+//size of ball
+const radius = 30
+
+//keys for player 1 w, s
+const upcode = 87;
+const downcode = 83;
+
+//keys for player 2 up, down arrows
+const upcode_two = 38;
+const downcode_two = 40;
+
+const NUMBER_OF_BALLS = 1;
 
 var key_pressed = {};
 window.onkeyup = function(event) { key_pressed[event.keyCode] = false; }
@@ -58,7 +70,7 @@ class Ball {
     this.top_speed = top_speed;
     this.height = radius*2;
     this.width = radius*2;
-    this.bounce_acceleration_multiplier = 1.25;
+    this.bounce_acceleration_multiplier = Math.log(Math.E + 1);
 
     var node = document.createElement("div");
     node.classList.add("ball", "animated", "flip");
@@ -78,9 +90,10 @@ class Ball {
       ball.getBoundingClientRect().x,
       ball.getBoundingClientRect().y + (1/2)*ball.getBoundingClientRect().height
     ).filter(function (e) { return e.classList.contains("paddle") });
+
     var elements_at_right_position = document.elementsFromPoint(
       ball.getBoundingClientRect().x + ball.getBoundingClientRect().width,
-      ball.getBoundingClientRect().y
+      ball.getBoundingClientRect().y + (1/2)*ball.getBoundingClientRect().height
     ).filter(function (e) { return e.classList.contains("paddle") });
 
     if (elements_at_left_position.length >= 1 || elements_at_right_position.length >= 1) {
@@ -98,7 +111,9 @@ class Ball {
     ball.style.background = "blue";
     ball.style.top = this.top + "%";
     ball.style.left = this.left + "%";
-    ball.style.border_radius = this.radius;
+    ball.style.borderRadius = this.radius + "px";
+    ball.style.height = this.height;
+    ball.style.width = this.width;
   }
 }
 
@@ -122,8 +137,8 @@ function handle_key_press() {
   }
 }
 
-var player_one_paddle = new Paddle(1, 80, 5, 50);
-var player_two_paddle = new Paddle(2, 80, 5, 50);
+var player_one_paddle = new Paddle(1, vertical_length, horizontal_length, starting_position);
+var player_two_paddle = new Paddle(2, vertical_length, horizontal_length, starting_position);
 
 var balls = [];
 for (var i = 1; i <= NUMBER_OF_BALLS; i++) {
@@ -131,7 +146,7 @@ for (var i = 1; i <= NUMBER_OF_BALLS; i++) {
     i, // ball ID
     30 + Math.random() * 50 << 0, // initial X% -- random value between 30% and 30+50%
     30 + Math.random() * 50 << 0, // initial Y% -- random value between 30% and 30+50%
-    10,  // radius
+    radius,  // radius
     0.3, // top speed
     0.3  // left speed
   ));

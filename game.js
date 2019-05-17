@@ -106,6 +106,28 @@ class Ball {
       this.top_speed = - this.top_speed;
     }
 
+    if (ball.getBoundingClientRect().left < 0) {
+      this.left = 30 + Math.random() * 50 << 0;
+      this.top = 30 + Math.random() * 50 << 0;
+      this.left_speed = 0.3;
+      this.top_speed = 0.3;
+
+      console.log("player 2 scored");
+      var score_card = document.querySelector(".score[data-player='2']");
+      score_card.innerText = parseInt(score_card.innerText) + 1;
+    }
+
+    if (ball.getBoundingClientRect().right > window.innerWidth) {
+      this.left = 30 + Math.random() * 50 << 0;
+      this.top = 30 + Math.random() * 50 << 0;
+      this.left_speed = 0.3;
+      this.top_speed = 0.3;
+
+      console.log("player 1 scored");
+      var score_card = document.querySelector(".score[data-player='1']");
+      score_card.innerText = parseInt(score_card.innerText) + 1;
+    }
+
     this.move();
 
     ball.style.background = "blue";

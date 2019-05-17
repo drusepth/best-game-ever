@@ -102,7 +102,7 @@ class Ball {
       this.left_speed *= this.bounce_acceleration_multiplier;
     }
 
-    if (ball.getBoundingClientRect().top < 0 || ball.getBoundingClientRect().top > window.innerHeight) {
+    if (ball.getBoundingClientRect().top < 0 || ball.getBoundingClientRect().top > window.innerHeight - this.height) {
       this.top_speed = - this.top_speed;
     }
 
